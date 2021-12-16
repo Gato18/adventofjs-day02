@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function Menu(props) {
-  const [button, setButton] = useState(
-    <button className="add" onClick={() => add(props)}>
-      Add to Cart
-    </button>
-  );
-
-  let add = (menu) => {
-    setButton(
+  let button = "";
+  if (props.menu.count === 0) {
+    button = (
+      <button className="add" onClick={() => add(props)}>
+        Add to Cart
+      </button>
+    );
+  } else {
+    button = (
       <button className="in-cart">
         <img src="./images/check.svg" alt="Check" />
         In Cart
       </button>
     );
-    menu.menu.count = 1;
+  }
+
+  let add = (menu) => {
     props.addToCart(menu.menu);
   };
 

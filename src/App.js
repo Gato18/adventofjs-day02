@@ -1,5 +1,6 @@
 import "./styles.css";
 import Menu from "./Components/Menu";
+import Cart from "./Components/Cart";
 import { useState } from "react";
 const menuItems = [
   { name: "French Fries with Ketchup", price: 223, image: "plate__french-fries.png", alt: "French Fries", count: 0 },
@@ -11,21 +12,31 @@ const menuItems = [
 ];
 
 function App() {
-  const [cart, setCart] = useState([]);
-  // const [menuList, setMenuList] = useState(menuItems);
+  const [menuList, setMenuList] = useState(menuItems);
+  const [subTotal, setSubTotal] = useState(0);
 
-  let addToCart = (menu) => {
-    setCart([...cart, menu]);
-    // let choice = menuList.filter((menus, i) => menus.name === menu.name);
-    // console.log(choice);
+  let addToCart = (menu, qte = 1) => {
+    console.log("name", menu.name);
+
+    let index = menuList.findIndex((e) => e.name === menu.name);
+    if (index > -1) {
+      let newItems = [...menuList];
+      newItems[index].count = qte;
+      setMenuList(newItems);
+    }
+    setSubTotal(menuList.reduce((a, b) => a + (b.count * b.price) / 100, 0));
   };
-  // console.log(menuList);
-  // console.log(cart);
 
   //On créé le composant menu pour afficher la liste des menus.
   let menu = menuItems.map((item, i) => {
     return <Menu key={i} menu={item} addToCart={addToCart} />;
   });
+
+  let cart = menuList
+    .filter((item) => item.count !== 0)
+    .map((menu, i) => {
+      return <Cart key={i} menu={menu} addToCart={addToCart} />;
+    });
 
   //Si le panier est vide on affiche du texte.
   let cartTxt = "";
@@ -43,54 +54,12 @@ function App() {
         <h1>Your Cart</h1>
         <p className="empty">{cartTxt}</p>
 
-        <ul className="cart-summary">
-          <li>
-            <div className="plate">
-              <img src="./images/plate__fish-sticks-fries.png" alt="Fish Sticks and Fries" className="plate" />
-              <div className="quantity">1</div>
-            </div>
-            <div className="content">
-              <p className="menu-item">Fish Sticks and Fries</p>
-              <p className="price">$6.34</p>
-            </div>
-            <div className="quantity__wrapper">
-              <button className="decrease">
-                <img src="./images/chevron.svg" alt="" />
-              </button>
-              <div className="quantity">1</div>
-              <button className="increase">
-                <img src="./images/chevron.svg" alt="" />
-              </button>
-            </div>
-            <div className="subtotal">$6.34</div>
-          </li>
-
-          <li>
-            <div className="plate">
-              <img src="./images/plate__french-fries.png" alt="French Fries" className="plate" />
-              <div className="quantity">2</div>
-            </div>
-            <div className="content">
-              <p className="menu-item">French Fries with Ketchup</p>
-              <p className="price">$2.23</p>
-            </div>
-            <div className="quantity__wrapper">
-              <button className="decrease">
-                <img src="./images/chevron.svg" alt="" />
-              </button>
-              <div className="quantity">2</div>
-              <button className="increase">
-                <img src="./images/chevron.svg" alt="" />
-              </button>
-            </div>
-            <div className="subtotal">$4.46</div>
-          </li>
-        </ul>
+        <ul className="cart-summary">{cart}</ul>
 
         <div className="totals">
           <div className="line-item">
             <div className="label">Subtotal:</div>
-            <div className="amount price subtotal">$10.80</div>
+            <div className="amount price subtotal">${subTotal}</div>
           </div>
           <div className="line-item">
             <div className="label">Tax:</div>
