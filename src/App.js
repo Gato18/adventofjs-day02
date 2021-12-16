@@ -12,15 +12,17 @@ const menuItems = [
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [menuList, setMenuList] = useState(menuItems);
 
   let addToCart = (menu) => {
-    console.log(menu.menu);
-    setCart([...cart, menu.menu]);
+    setCart([...cart, menu]);
+    // setMenuList([...menuList, menuList.filter((menus, i) => menus.name === menu.name)[0]]);
   };
-  console.log("cart", cart);
+  console.log(menuList);
+  console.log(cart);
 
   //On créé le composant menu pour afficher la liste des menus.
-  let menu = menuItems.map((item, i) => {
+  let menu = menuList.map((item, i) => {
     return <Menu key={i} menu={item} addToCart={addToCart} />;
   });
 

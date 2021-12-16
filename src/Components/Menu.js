@@ -15,7 +15,7 @@ export default function Menu(props) {
       </button>
     );
     menu.menu.count = 1;
-    props.addToCart(menu);
+    props.addToCart(menu.menu);
   };
 
   return (
