@@ -2,6 +2,7 @@ import "./styles.css";
 import Menu from "./Components/Menu";
 import Cart from "./Components/Cart";
 import { useState } from "react";
+
 const menuItems = [
   { name: "French Fries with Ketchup", price: 223, image: "plate__french-fries.png", alt: "French Fries", count: 0 },
   { name: "Salmon and Vegetables", price: 512, image: "plate__salmon-vegetables.png", alt: "Salmon and Vegetables", count: 0 },
@@ -16,24 +17,22 @@ function App() {
   const [subTotal, setSubTotal] = useState(0);
 
   let addToCart = (menu, qte = 1) => {
-    let index = menuList.findIndex((e) => e.name === menu.name);
-    if (index > -1) {
-      let newItems = [...menuList];
-      newItems[index].count = qte;
-      setMenuList(newItems);
-    }
-    setSubTotal(menuList.reduce((a, b) => a + (b.count * b.price) / 100, 0));
+    let index = menuList.map((e) => {
+      return e.name === menu.name ? { ...menu, count: qte } : e;
+    });
+    setMenuList(index);
+    setSubTotal(index.reduce((a, b) => a + (b.count * b.price) / 100, 0));
   };
 
   //On créé le composant menu pour afficher la liste des menus.
   let menu = menuItems.map((item, i) => {
-    return <Menu key={i} menu={item} addToCart={addToCart} />;
+    return <Menu key={item.name} menu={item} addToCart={addToCart} />;
   });
 
   let cart = menuList
     .filter((item) => item.count !== 0)
     .map((menu, i) => {
-      return <Cart key={i} menu={menu} addToCart={addToCart} />;
+      return <Cart key={menu.name} menu={menu} addToCart={addToCart} />;
     });
 
   //Si le panier est vide on affiche du texte.
