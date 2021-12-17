@@ -5,6 +5,7 @@
 ## Brief
 
 In this project, we're creating an eCommerce component.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/699a0a80-264f-41ca-b396-86779c976f05/deploy-status)](https://app.netlify.com/sites/romantic-yonath-80c448/deploys)
 
 ## Challenge
 
