@@ -16,8 +16,6 @@ function App() {
   const [subTotal, setSubTotal] = useState(0);
 
   let addToCart = (menu, qte = 1) => {
-    console.log("name", menu.name);
-
     let index = menuList.findIndex((e) => e.name === menu.name);
     if (index > -1) {
       let newItems = [...menuList];
@@ -59,15 +57,15 @@ function App() {
         <div className="totals">
           <div className="line-item">
             <div className="label">Subtotal:</div>
-            <div className="amount price subtotal">${subTotal}</div>
+            <div className="amount price subtotal">${Math.round(subTotal * 100) / 100}</div>
           </div>
           <div className="line-item">
             <div className="label">Tax:</div>
-            <div className="amount price tax">$1.05</div>
+            <div className="amount price tax">${Math.round(subTotal * 0.0975 * 100) / 100}</div>
           </div>
           <div className="line-item total">
             <div className="label">Total:</div>
-            <div className="amount price total">$11.85</div>
+            <div className="amount price total">${Math.round((subTotal + subTotal * 0.0975) * 100) / 100}</div>
           </div>
         </div>
       </div>

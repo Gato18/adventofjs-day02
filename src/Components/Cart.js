@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 export default function Cart(props) {
-  const [quantity, setQuantity] = useState(props.menu.count);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     props.addToCart(props.menu, quantity);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quantity]);
 
   return (
