@@ -2,6 +2,10 @@
 
 # Day 2 - eCommerce component
 
+## My Demo
+
+https://romantic-yonath-80c448.netlify.app/
+
 ## Brief
 
 In this project, we're creating an eCommerce component.
